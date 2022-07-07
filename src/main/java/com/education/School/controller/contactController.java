@@ -5,16 +5,15 @@ import com.education.School.service.ContactService;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j // Lombok annotation to give us log.info log.error functionality directly
 @Controller
@@ -60,8 +59,29 @@ public class contactController {
             log.error("Contact form validations failed due to : "+ errors.toString());
             return "contact.html";
         }
-        //Accessing saveMessageDetails() function and passing contact object to display or save input data
+        //Accessing saveMessageDetails() function and passing contact object to display or save input data into DB
         contactService.saveMessageDetails(contact);
         return "redirect:/contact";
+    }
+
+    //Controller function to retrieve msgs from DB and show them to ADMIN
+    @RequestMapping("/displayMessages")
+    public ModelAndView displayMessages(Model model){
+
+        //INVOKING findMsgsWithOpenStatus function in contactService class to get msgs from db in form of List
+        List<Contact> contactMsgs = contactService.findMsgsWithOpenStatus();
+        //injecting msgs into messages.html template and returning that template to display
+        ModelAndView modelAndView = new ModelAndView("messages.html");
+        modelAndView.addObject("contactMsgs" , contactMsgs);
+        return modelAndView;
+    }
+
+    //Controller function to close the msg and update the database that a particular msg with given id is closed
+
+    @GetMapping("/closeMsg")
+    public String closeMsg(@RequestParam int id , Authentication authentication){
+        //Getting the Authentication details of the users who is closing the msg to update the updated by details
+            contactService.updateMsgStatus(id,authentication.getName());
+            return"redirect:/displayMessages";
     }
 }

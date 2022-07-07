@@ -10,12 +10,14 @@ import javax.validation.constraints.Size;
 
 //Contact bean class
 @Data
-public class Contact {
+public class Contact extends BaseEntity {
     //Jakarta Validation is used to do the server side validations of user field data
     //@NotBlank: This annotation is used to validate that the input field is not blank
     //@Size: This annotation is used to ensure that field is having that amount of characters
     //@Pattern: It is used to validate the field based on regex expression
     //@Email : It ensures that correct email address is provided in given field
+
+    private int contactId;
     @NotBlank(message = "Name must not be blank")
     @Size(min=3, message= "Name must be at least 3 characters long")
     private String name;

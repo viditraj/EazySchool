@@ -39,10 +39,11 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
    @Override
     protected void configure(HttpSecurity http) throws Exception {
         //mvcMatchers is used to match the endpoint with the given expression and then trigger corresponding next action
-        http.csrf().ignoringAntMatchers("/saveMsg").and().
+        http.csrf().ignoringAntMatchers("/saveMsg").ignoringAntMatchers("/h2-console/**").and().
                 authorizeRequests().
                 mvcMatchers("/home").permitAll().
-                mvcMatchers("/dashboard").authenticated().//step 3- dashboard is displayed step 4-on logout go to logout step 5
+                mvcMatchers("/dashboard").authenticated().
+                mvcMatchers("/displayMessages").hasRole("ADMIN").//step 3- dashboard is displayed step 4-on logout go to logout step 5
                 mvcMatchers("/holidays/**").permitAll().
                 mvcMatchers("/contacts").permitAll().
                 mvcMatchers("/saveMsg").permitAll().
@@ -50,9 +51,12 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
                 mvcMatchers("/about").permitAll().
                 and().formLogin().loginPage("/login").//step1-loginPage step2-on successful login display dashboard
                 defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll().
+                and().authorizeRequests().antMatchers("/h2-console/**").permitAll().
                 and().logout().logoutSuccessUrl("/login?logout=true").invalidateHttpSession(true).permitAll().
                 //step 5- on logout display login page again and end session
                 and().httpBasic();
+                http.headers().frameOptions().disable();
+
     }
 
 

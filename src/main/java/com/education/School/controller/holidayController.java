@@ -1,6 +1,8 @@
 package com.education.School.controller;
 
 import com.education.School.model.Holiday;
+import com.education.School.repository.holidayRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +15,8 @@ import java.util.stream.Collectors;
 
 @Controller
 public class holidayController {
-
+    @Autowired
+    private holidayRepository holiRepo;
     //METHOD 1 Accessing URL parameters using RequestParam Annotation
 
    /* @GetMapping(value = "/holidays")
@@ -52,11 +55,7 @@ public class holidayController {
         }
 
 
-        List<Holiday> holidays = Arrays.asList(
-                new Holiday(" Jan 1" , "New Year's Day" , Holiday.Type.FESTIVAL),
-                new Holiday("Jan 26" , "Republic Day" , Holiday.Type.FEDERAL),
-                new Holiday("March 12" , "Holi" , Holiday.Type.FESTIVAL)
-        );
+        List<Holiday> holidays = holiRepo.getHolidays();
         Holiday.Type types [] = Holiday.Type.values();
         for(Holiday.Type type : types){
             model.addAttribute(type.toString(),

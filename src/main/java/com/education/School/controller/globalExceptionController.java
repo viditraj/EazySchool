@@ -1,6 +1,7 @@
 package com.education.School.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,6 +29,14 @@ public class globalExceptionController {
         ModelAndView errorPage = new ModelAndView();
         errorPage.setViewName("error"); //error.html
         errorPage.addObject("errormsg", exception.getMessage());
+
+        return errorPage;
+    }
+    @ExceptionHandler(BadSqlGrammarException.class)
+    public ModelAndView exceptionHandler(){
+        ModelAndView errorPage = new ModelAndView();
+        errorPage.setViewName("error"); //error.html
+        errorPage.addObject("errormsg", "Its simply a Syntax Error, Chill and Check the syntax of your DB Query");
 
         return errorPage;
     }
