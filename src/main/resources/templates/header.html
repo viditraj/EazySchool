@@ -19,16 +19,32 @@
             <div class="collapse navbar-collapse" id="navbarScroll">
                 <ul class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll">
                     <li class="nav-item">
-                        <a th:href="@{/home}" class="nav-link active" aria-current="page">Home</a>
+                        <a th:classappend="${#httpServletRequest.getRequestURI() == '/home' ? 'active' : ''}"
+                                th:href="@{/home}" class="nav-link" aria-current="page">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/courses}" class="nav-link">Courses</a>
+                        <a th:classappend="${#httpServletRequest.getRequestURI() == '/courses' ? 'active' : ''}"
+                                th:href="@{/courses}" class="nav-link">Courses</a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/holidays/all}" class="nav-link">Holidays</a>
+                        <a th:classappend="${#httpServletRequest.getRequestURI() == '/holidays/all' ? 'active' : ''}"
+                                th:href="@{/holidays/all}" class="nav-link">Holidays</a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/contact}" class="nav-link">Contact</a>
+                        <a th:classappend="${#httpServletRequest.getRequestURI() == '/contact' ? 'active' : ''}"
+                                th:href="@{/contact}" class="nav-link">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:classappend="${#httpServletRequest.getRequestURI() == '/contact' ? 'active' : ''}"
+                           th:href="@{/login}" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:classappend="${#httpServletRequest.getRequestURI() == '/contact' ? 'active' : ''}"
+                           th:href="@{/dashboard}" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:classappend="${#httpServletRequest.getRequestURI() == '/contact' ? 'active' : ''}"
+                           th:href="@{/logout}" class="nav-link">Logout</a>
                     </li>
                 </ul>
             </div>
