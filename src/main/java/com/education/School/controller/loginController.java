@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class loginController {
     //'/login' is both a GET and POST request
-    @RequestMapping(value = "/login", method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value ="/login", method = {RequestMethod.GET,RequestMethod.POST})
     public String displayLoginPage(@RequestParam(value = "error",required = false) String error ,
                                    @RequestParam(value ="logout",required = false) String logout, Model model){
         String errorMsg = null;

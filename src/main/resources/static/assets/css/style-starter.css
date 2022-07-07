@@ -21212,13 +21212,20 @@ h4.inner-text-title {
     margin-left: 40%;
 }
 
+.google-login{
+    color: var(--secondary-color);
+    margin-left: 60%;
+}
+
 /* //login section */
 
 /* //error section */
 .page_404  img{
     width:100%;
 }
-
+.cont{
+padding-left: 10%
+}
 .four_zero_four_bg{
     background-image: url(/assets/images/dribbble.gif);
     height: 400px;
@@ -21240,9 +21247,11 @@ h4.inner-text-title {
  }
 
 .contant_box_404{
-    margin-top:-50px;
+    margin-top:-60px;
 }
-
+.margin-fix{
+padding-top : 2%;
+}
 /* //error section */
 
 /* team block */

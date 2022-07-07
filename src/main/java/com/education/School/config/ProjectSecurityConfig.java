@@ -4,11 +4,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 //WebSecurityConfigurerAdapter -> Spring Security implementation class
 
+@EnableWebSecurity
 @Configuration
 public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -37,12 +39,13 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
    @Override
     protected void configure(HttpSecurity http) throws Exception {
         //mvcMatchers is used to match the endpoint with the given expression and then trigger corresponding next action
-        http.csrf().disable().
+        http.csrf().ignoringAntMatchers("/saveMsg").and().
                 authorizeRequests().
                 mvcMatchers("/home").permitAll().
                 mvcMatchers("/dashboard").authenticated().//step 3- dashboard is displayed step 4-on logout go to logout step 5
                 mvcMatchers("/holidays/**").permitAll().
                 mvcMatchers("/contacts").permitAll().
+                mvcMatchers("/saveMsg").permitAll().
                 mvcMatchers("/courses").permitAll().
                 mvcMatchers("/about").permitAll().
                 and().formLogin().loginPage("/login").//step1-loginPage step2-on successful login display dashboard
