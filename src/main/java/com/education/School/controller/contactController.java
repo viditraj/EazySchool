@@ -71,7 +71,7 @@ public class contactController {
     }
 
     //Controller function to retrieve msgs from DB and show them to ADMIN
-    @RequestMapping("/displayMessages")
+   /* @RequestMapping("/admin/displayMessages")
     public ModelAndView displayMessages(Model model){
 
         //INVOKING findMsgsWithOpenStatus function in contactService class to get msgs from db in form of List
@@ -80,7 +80,7 @@ public class contactController {
         ModelAndView modelAndView = new ModelAndView("messages.html");
         modelAndView.addObject("contactMsgs" , contactMsgs);
         return modelAndView;
-    }
+    } */
 
     //Controller function to close the msg and update the database that a particular msg with given id is closed
 
@@ -88,6 +88,6 @@ public class contactController {
     public String closeMsg(@RequestParam int id){
         //Getting the Authentication details of the users who is closing the msg to update the updated by details
             contactService.updateMsgStatus(id);
-            return"redirect:/displayMessages";
+            return"redirect:/admin/displayMessages";
     }
 }

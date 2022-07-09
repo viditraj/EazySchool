@@ -6,6 +6,7 @@ import com.education.School.model.Roles;
 import com.education.School.repository.personRepository;
 import com.education.School.repository.rolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -18,11 +19,15 @@ public class PersonService {
 
     @Autowired
     private rolesRepository rolesRepo;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     public int createNewPerson(Person person) {
 
         int isSaved = 0;
         Roles role = rolesRepo.getByRoleName("STUDENT");
         person.setRoles(role);
+        person.setPwd(passwordEncoder.encode(person.getPwd())); // hashing the password before storing it into DB
         Person alreadyRegisteredEmail = personRepo.findByEmail(person.getEmail());
         Person alreadyRegisteredPhone = personRepo.findByMobileNumber(person.getMobileNumber());
         if(null!=alreadyRegisteredEmail){

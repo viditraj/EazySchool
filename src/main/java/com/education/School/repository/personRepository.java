@@ -8,4 +8,7 @@ public interface personRepository extends JpaRepository<Person, Integer > {
     Person findByEmail(String email);
 
     Person findByMobileNumber(String mobileNumber);
+
+    Person readByEmail(String email);
+
 }

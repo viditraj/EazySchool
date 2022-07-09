@@ -1,12 +1,17 @@
 package com.education.School.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.management.MXBean;
 
 //WebSecurityConfigurerAdapter -> Spring Security implementation class
 
@@ -43,7 +48,9 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
                 authorizeRequests().
                 mvcMatchers("/home").permitAll().
                 mvcMatchers("/dashboard").authenticated().
-                mvcMatchers("/displayMessages").hasRole("ADMIN").//step 3- dashboard is displayed step 4-on logout go to logout step 5
+                mvcMatchers("/displayProfile").authenticated().
+                mvcMatchers("/updateProfile").authenticated().
+                mvcMatchers("/admin/**").hasRole("ADMIN").
                 mvcMatchers("/holidays/**").permitAll().
                 mvcMatchers("/contacts").permitAll().
                 mvcMatchers("/saveMsg").permitAll().
@@ -60,8 +67,16 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    //FUNCTION TO IMPLEMENT PASSWORD ENCODER. IT PROVIDES THE FELXIBILITY TO CHANGE THE ENCODER TYPE
+    //BY JUST RETURNING NEW ENCODER TYPE FROM THIS FUNCTION
+      @Bean
+    public PasswordEncoder passwordEncoder(){
+       return new BCryptPasswordEncoder(); //Implementing BCrypt Password Encoder
+      }
 
-//ADDING USER LOGIN DETAILS
+
+    /*
+ADDING USER LOGIN DETAILS
    @Override
     protected void configure(AuthenticationManagerBuilder auth ) throws Exception{
         //Using inMemoryAuthentication to tell Spring that these login details are valid and it should store them
@@ -70,5 +85,5 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .withUser("admin").password("4321").roles("USER","ADMIN")
                 .and().passwordEncoder(NoOpPasswordEncoder.getInstance());
-    }
+    } */
 }
