@@ -2,10 +2,7 @@ package com.education.School.repository;
 
 
 import com.education.School.model.Contact;
-import com.education.School.rowMapper.contactRowMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -16,9 +13,41 @@ import java.util.List;
 
 //Repository annotation is used to tell Spring that this Bean will do DB related operations
 @Repository
-public class contactRepository {
+public interface contactRepository extends CrudRepository<Contact , Integer> {
 
-    private final JdbcTemplate jdbcTemplate ;
+
+    /*
+    To implement selects with custom where conditions we can make methods with such naming conventions which
+    will tell Spring JPA about what we want to find
+    Eg: findByAge(String Age) -> if we implement this method then Spring JPA is smart enough to derive
+    SQL select statements with desired where conditions which it will get from the method name
+    In our case Spring JPA will automatically select rows which will have age field value = value passed as parameter
+    */
+
+    //Abstract method to find msg with given status value passed as the parameter
+    List<Contact> findByStatus(String Status); //this will tell JPA to find all the contact msgs whose status = status value passed in parameter
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/************** IMPLEMENTATION BEFORE JAP ***************/
+
+ /* private final JdbcTemplate jdbcTemplate ;
 
     @Autowired
     public contactRepository(JdbcTemplate jdbcTemplate){
@@ -28,8 +57,8 @@ public class contactRepository {
     //DATABASE METHOD TO SAVE MSGS INTO DATABASE
     public int saveContactMsg(Contact contact){
 
-        String sql ="INSERT INTO CONTACT_MSG (NAME,MOBILE_NUM,EMAIL,SUBJECT,MESSAGE,STATUS,"+
-                "CREATED_AT,CREATED_BY) VALUES( ?,?,?,?,?,?,?,?);";
+        String sql ="insert into contact_msg (NAME,MOBILE_NUM,EMAIL,SUBJECT,MESSAGE,STATUS,"+
+                "CREATED_AT,CREATED_BY) values( ?,?,?,?,?,?,?,?);";
 
         return jdbcTemplate.update(sql, contact.getName(),contact.getMobileNum(),
                 contact.getEmail(),contact.getSubject(),contact.getMessage(),
@@ -39,7 +68,7 @@ public class contactRepository {
     //DATABASE METHOD TO FETCH MSGS BASED ON STATUS PASSED AS PARAMETER
 
     public List<Contact> findMsgsWithStatus(String status){
-        String sql = "SELECT * FROM CONTACT_MSG WHERE STATUS = ?";
+        String sql = "select * from contact_msg where STATUS = ?";
         return jdbcTemplate.query(sql,new PreparedStatementSetter() {
             public void setValues(PreparedStatement ps) throws SQLException {
                 ps.setString(1, status);
@@ -49,7 +78,7 @@ public class contactRepository {
 
     //DB METHOD TO CHANGE STATUS OF THE MESSAGE
     public int updateMsgStatus(int id , String status , String updatedBy){
-        String sql = "UPDATE CONTACT_MSG SET STATUS = ?,UPDATED_BY = ? , UPDATED_AT = ? WHERE CONTACT_ID = ?";
+        String sql = "update contact_msg set STATUS = ?,UPDATED_BY = ? , UPDATED_AT = ? where CONTACT_ID = ?";
         return jdbcTemplate.update(sql,new PreparedStatementSetter(){
             public void setValues(PreparedStatement ps) throws SQLException {
                 ps.setString(1,status);
@@ -59,4 +88,5 @@ public class contactRepository {
             }
         });
     }
-}
+
+    */

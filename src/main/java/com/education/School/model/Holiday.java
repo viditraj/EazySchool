@@ -3,10 +3,18 @@ package com.education.School.model;
 //Lombok is the dependency which is used to generate getters,setters,constructors and toString functions automatically
 import lombok.Data;
 
+import javax.persistence.*;
+
 @Data //@Data is used to implement Lombok
+@Entity
+@Table(name = "holidays")
 public class Holiday extends BaseEntity{
+
+    @Id
     private  String day;
     private  String reason;
+
+    @Enumerated(EnumType.STRING) // To convert enum Type to String during Storing holiday type in DB
     private  Type type;
 
     public enum Type{

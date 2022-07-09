@@ -39,7 +39,7 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
    @Override
     protected void configure(HttpSecurity http) throws Exception {
         //mvcMatchers is used to match the endpoint with the given expression and then trigger corresponding next action
-        http.csrf().ignoringAntMatchers("/saveMsg").ignoringAntMatchers("/h2-console/**").and().
+        http.csrf().ignoringAntMatchers("/saveMsg").ignoringAntMatchers("/public/**").and().
                 authorizeRequests().
                 mvcMatchers("/home").permitAll().
                 mvcMatchers("/dashboard").authenticated().
@@ -49,13 +49,14 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
                 mvcMatchers("/saveMsg").permitAll().
                 mvcMatchers("/courses").permitAll().
                 mvcMatchers("/about").permitAll().
+                mvcMatchers("/public/**").permitAll().
                 and().formLogin().loginPage("/login").//step1-loginPage step2-on successful login display dashboard
                 defaultSuccessUrl("/dashboard").failureUrl("/login?error=true").permitAll().
-                and().authorizeRequests().antMatchers("/h2-console/**").permitAll().
+               // and().authorizeRequests().antMatchers("/h2-console/**").permitAll(). -->h2 db
                 and().logout().logoutSuccessUrl("/login?logout=true").invalidateHttpSession(true).permitAll().
                 //step 5- on logout display login page again and end session
                 and().httpBasic();
-                http.headers().frameOptions().disable();
+               // http.headers().frameOptions().disable(); -->used in case of h2 db
 
     }
 

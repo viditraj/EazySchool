@@ -59,7 +59,8 @@ Author URL: http://w3layouts.com
                             <div class="overview__inner">
                                 <div class="overview-box clearfix">
                                     <div class="icon">
-                                        <i class="fas fa-envelope-open-text"></i>
+                                        <i th:if="${newMsg}" class ="fas fa-solid fa-envelope-open-text"></i>
+                                        <i th:unless="${newMsg}" class ="fas fa-solid fa-envelope-open"></i>
                                     </div>
                                     <div class="text">
                                         <h2>Messages</h2>
@@ -107,11 +108,11 @@ Author URL: http://w3layouts.com
 <!-- //move top -->
 
 <!-- common jquery plugin -->
-<script src="assets/js/jquery-3.3.1.min.js"></script>
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
 <!-- //common jquery plugin -->
 
 <!-- theme switch js (light and dark)-->
-<script src="assets/js/theme-change.js"></script>
+<script src="/assets/js/theme-change.js"></script>
 <!-- //theme switch js (light and dark)-->
 
 <!-- MENU-JS -->

@@ -21,15 +21,21 @@ public class loginController {
     //'/login' is both a GET and POST request
     @RequestMapping(value ="/login", method = {RequestMethod.GET,RequestMethod.POST})
     public String displayLoginPage(@RequestParam(value = "error",required = false) String error ,
-                                   @RequestParam(value ="logout",required = false) String logout, Model model){
+                                   @RequestParam(value ="logout",required = false) String logout,
+                                   @RequestParam(value ="register",required = false) String register,Model model){
         String errorMsg = null;
+        String registered = null;
         if(error!=null){
             errorMsg = "Username or Password is incorrect!";
         }
         if(logout!=null){
             errorMsg = "You have been successfully logged out!";
         }
+        if(register!=null){
+            registered ="You have been successfully register!!!";
+        }
         model.addAttribute("errorMsg" , errorMsg);
+        model.addAttribute("registered" , registered);
 
         return "login.html";
     }

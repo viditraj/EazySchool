@@ -2163,7 +2163,7 @@ progress {
 .table-dark {
   --bs-table-bg: #212529;
   --bs-table-striped-bg: #2c3034;
-  --bs-table-striped-color: #fff;
+  --bs-table-striped-color: white;
   --bs-table-active-bg: #373b3e;
   --bs-table-active-color: #fff;
   --bs-table-hover-bg: #323539;
@@ -11799,6 +11799,7 @@ fieldset:disabled .btn {
   --gradient-color-banner: linear-gradient(to left, #00c9f5 0%, #00a4f5 100%);
   --layer: rgb(1 121 179 / 75%);
   --subscribe-footer-input: #fff;
+  --table-column-col : #060606;
 }
 
 [data-theme="dark"] {
@@ -11814,6 +11815,7 @@ fieldset:disabled .btn {
   --box-shadow: 0 0.5rem 1rem rgb(5 14 18);
   --banner-layer: rgb(8 23 30 / 85%);
   --subscribe-footer-input: #040b0e;
+  --table-column-col:#ababab;
 }
 
 * {
@@ -21548,4 +21550,10 @@ label {
 
 .table-responsive-md {
   margin: 50px;
+}
+.fixvid{
+ margin-bottom:80px;
+}
+.col-fix-vid td {
+color : var(--table-column-col);
 }

@@ -1,29 +1,18 @@
 package com.education.School.repository;
 
-
 import com.education.School.model.Holiday;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class holidayRepository {
+public interface holidayRepository extends CrudRepository<Holiday , String> {
+/*
+here <Holiday, String> is used to tell that JPA that which corresponding POJO class or TABLE
+this function is going to work upon and what is the datatype of the Primary Key of that table
+here Holiday = POJO class and String = datatype of field day in Holiday POJO class or holidays table
+*/
 
-    private final JdbcTemplate jdbcTemplate ;
 
-    @Autowired
-    public holidayRepository(JdbcTemplate jdbcTemplate){
-        this.jdbcTemplate = jdbcTemplate;
-    }
-    public List<Holiday> getHolidays(){
-        String sql ="SELECT * FROM HOLIDAYS";
-        var rowMapper = BeanPropertyRowMapper.newInstance(Holiday.class);
-        //When FIELD NAME and COL NAMES matches in class and DB then no need to make custom rowmapper
-        //as mapping will be done automatically.
-        //but we need to create an instance of the rowmapper with the class we want to map rows with
-        return jdbcTemplate.query(sql,rowMapper);
-    }
 }
