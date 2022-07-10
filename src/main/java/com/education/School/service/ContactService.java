@@ -7,6 +7,10 @@ import com.education.School.repository.contactRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -45,13 +49,19 @@ public class ContactService {
 
     //FUNCTION TO FIND MESSAGES AND DISPLAYING THEM
 
-    public List<Contact> findMsgsWithOpenStatus(){
+    public Page<Contact> findMsgsWithOpenStatus(int pageNum, String sortField , String sortDir){
         //Invoking the DATA layer repository method findMsgsWithStatus() which
         //fetches entries from database based on the status passed in parameter
        //  List<Contact> contactMsgs = conRepo.findMsgsWithStatus("OPEN"); //conRepo = object of contactRepository Class --> before JPA
-        List<Contact> contactMsgs = conRepo.findByStatus("OPEN");
+      //List<Contact> contactMsgs = conRepo.findByStatus("OPEN");
         //--> after implementing JPA we have simply created findByStatus abstract method and all the work is handled by JPA
-        return contactMsgs;
+
+        //====AFTER PAGINATION===//
+        int pageSize =5;
+        Pageable pageable = PageRequest.of(pageNum-1 , pageSize,
+                sortDir.equals("asc")? Sort.by(sortField).ascending():Sort.by(sortField).descending());
+        Page<Contact> msgPage = conRepo.findByStatus("OPEN",pageable);
+        return msgPage;
     }
 
     //FUNTION TO INVOKE updateMsgStatus FUNCTION IN contactRepository class FOR CLOSING THE MSG

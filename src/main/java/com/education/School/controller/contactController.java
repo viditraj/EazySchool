@@ -88,6 +88,6 @@ public class contactController {
     public String closeMsg(@RequestParam int id){
         //Getting the Authentication details of the users who is closing the msg to update the updated by details
             contactService.updateMsgStatus(id);
-            return"redirect:/admin/displayMessages";
+            return"redirect:/admin/displayMessages/page/1?sortField=name&sortDir=desc";
     }
 }

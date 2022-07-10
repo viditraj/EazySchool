@@ -2,6 +2,8 @@ package com.education.School.repository;
 
 
 import com.education.School.model.Contact;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +27,9 @@ public interface contactRepository extends CrudRepository<Contact , Integer> {
     */
 
     //Abstract method to find msg with given status value passed as the parameter
-    List<Contact> findByStatus(String Status); //this will tell JPA to find all the contact msgs whose status = status value passed in parameter
+    List<Contact> findByStatus(String status); //this will tell JPA to find all the contact msgs whose status = status value passed in parameter
+
+    Page<Contact> findByStatus(String status, Pageable pageable); //this will allow JPA to have pagination capability
 }
 
 

@@ -29,8 +29,11 @@ public class dashboardController {
        Person person = personRepo.readByEmail(authentication.getName());
        model.addAttribute("username" , person.getName());
        model.addAttribute("roles" , authentication.getAuthorities().toString());
-        //throw new RuntimeException("It's been a bad day for us");
-       model.addAttribute("newMsg", contactService.getCountMsg());
+        //Logic to print the class of the Student to let him know in which class he is
+        if(null!=person.getClassRoom() && null != person.getClassRoom().getName()){
+            model.addAttribute("enrolledClass" , person.getClassRoom().getName());
+        }
+       //model.addAttribute("newMsg", contactService.getCountMsg());
 
        /*
        When the USER very first time logs into the app he will get redirect to dashboard ,

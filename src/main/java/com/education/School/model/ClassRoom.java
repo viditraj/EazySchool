@@ -1,17 +1,21 @@
 package com.education.School.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;
-
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = "class")
 public class ClassRoom extends BaseEntity{
+
 
     @OneToMany(mappedBy = "classRoom" , fetch = FetchType.LAZY,cascade = CascadeType.PERSIST,targetEntity = Person.class)
      private Set<Person> persons;

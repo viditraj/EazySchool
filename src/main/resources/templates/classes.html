@@ -79,18 +79,18 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="classRoom: ${classRoom}">
-                <td th:text="${classRoom.classId}"></td>
-                <td th:text="${classRoom.name}"></td>
-                <td><a th:href="@{/admin/displayStudents(classId=${classRoom.classId})}" class="btn btn-success">VIEW</a></td>
-                <td><a th:href="@{/admin/deleteClass(id=${classRoom.classId})}" class="btn btn-warning">DELETE</a></td>
+            <tr th:each="classRooms: ${classRooms}" class = "col-fix-vid">
+                <td th:text="${classRooms.classId}"></td>
+                <td th:text="${classRooms.name}"></td>
+                <td><a th:href="@{/admin/displayStudents(classId=${classRooms.classId})}" class="btn btn-success">VIEW</a></td>
+                <td><a th:href="@{/admin/deleteClass(id=${classRooms.classId})}" class="btn btn-warning">DELETE</a></td>
             </tr>
             </tbody>
         </table>
     </div>
     <div class="col-md-2 login-center text-start">
         <a th:href="@{/dashboard}">
-            <button class="btn btn-style btn-style-3 text-left">BACK</button>
+            <button class="btn btn-style btn-style-3 text-left back-fix">BACK</button>
         </a>
     </div>
 </div>
