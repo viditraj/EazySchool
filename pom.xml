@@ -14,7 +14,7 @@
 	<name>School</name>
 	<description>Eazy School Web Application</description>
 	<properties>
-		<java.version>9</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -97,6 +97,7 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+					<release>11</release>  <!--or <release>10</release>-->
 				</configuration>
 			</plugin>
 		</plugins>
