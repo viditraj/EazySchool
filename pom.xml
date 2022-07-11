@@ -14,7 +14,7 @@
 	<name>School</name>
 	<description>Eazy School Web Application</description>
 	<properties>
-		<java.version>8</java.version>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -76,7 +76,7 @@
 		<dependency>
 			<groupId>com.twilio.sdk</groupId>
 			<artifactId>twilio</artifactId>
-			<version>7.34.0</version>
+			<version>8.8.0</version>
 		</dependency>
 	</dependencies>
 
