@@ -47,6 +47,7 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().ignoringAntMatchers("/saveMsg").ignoringAntMatchers("/public/**").
                 ignoringAntMatchers("/api/**").and().
                 authorizeRequests().
+                mvcMatchers("/sendSMS").permitAll().
                 mvcMatchers("/home").permitAll().
                 mvcMatchers("/dashboard").authenticated().
                 mvcMatchers("/displayProfile").authenticated().

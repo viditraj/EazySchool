@@ -81,11 +81,12 @@ public class publicController {
         String fromAddress = "viditraj20@gmail.com";
         String senderName = "XYZ School";
         String subject = "Please verify your registration";
-        String content = "Dear [[name]],<br>"
+        String content = "Hi [[name]],<br>"
+                +"We just need to verify your email address before you can access our App.<br>"
                 + "Please click the link below to verify your registration:<br>"
                 + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-                + "Thank you,<br>"
-                + "Your company name.";
+                + "Thanks,<br>"
+                + "XYZ School.";
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);

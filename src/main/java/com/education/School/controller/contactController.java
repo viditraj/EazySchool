@@ -5,6 +5,8 @@ import com.education.School.service.ContactService;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Slf4j // Lombok annotation to give us log.info log.error functionality directly
@@ -23,6 +28,9 @@ public class contactController {
     //contactService object
     private final ContactService contactService;
 
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     //Injecting contactService bean in contactController
     @Autowired
@@ -57,7 +65,7 @@ public class contactController {
     //When the user submits the form this route is hit. Validations are performed as we are using @VALID annotation
     //on the POJO object as Defined by @ModelAttribute and if there are any errors then we catch them in errors object of Errors
     //If there are errors don't save the data simply log the errors otherwise save the data
-    public String saveMsg(@Valid @ModelAttribute("contact") Contact contact , Errors errors , RedirectAttributes rediAttri){
+    public String saveMsg(@Valid @ModelAttribute("contact") Contact contact , Errors errors , RedirectAttributes rediAttri) throws MessagingException, UnsupportedEncodingException {
         if(errors.hasErrors()){
             log.error("Contact form validations failed due to : "+ errors.toString());
             return "contact.html";
@@ -67,6 +75,7 @@ public class contactController {
         contactService.saveMessageDetails(contact);
         //To display success message
         rediAttri.addFlashAttribute("success" ,"Submitted Successfully" );
+        sendEmail(contact);
         return "redirect:/contact";
     }
 
@@ -89,5 +98,31 @@ public class contactController {
         //Getting the Authentication details of the users who is closing the msg to update the updated by details
             contactService.updateMsgStatus(id);
             return"redirect:/admin/displayMessages/page/1?sortField=name&sortDir=desc";
+    }
+
+    private void sendEmail(Contact contact) throws UnsupportedEncodingException, MessagingException {
+        String toAddress = contact.getEmail();
+        String fromAddress = "viditraj20@gmail.com";
+        String senderName = "XYZ School";
+        String subject = "Thank you for Contacting Us!";
+        String content = "Hi [[name]],<br>"
+                + "Thank you for choosing us. We have received your query.<br>"
+                + "One of our executive will be contacting you soon.<br>"
+                + "Thanks,<br>"
+                + "XYZ School.";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        content = content.replace("[[name]]", contact.getName());
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
+
     }
 }
