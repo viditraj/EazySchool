@@ -1,7 +1,10 @@
 package com.education.School.controller;
 
 //LOGIN/LOGOUT CONTROLLER CLASS
+import com.education.School.model.Person;
+import com.education.School.repository.personRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -19,12 +22,17 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class loginController {
     //'/login' is both a GET and POST request
+
+    @Autowired
+    private personRepository personRepo;
     @RequestMapping(value ="/login", method = {RequestMethod.GET,RequestMethod.POST})
     public String displayLoginPage(@RequestParam(value = "error",required = false) String error ,
                                    @RequestParam(value ="logout",required = false) String logout,
-                                   @RequestParam(value ="register",required = false) String register,Model model){
+                                   @RequestParam(value ="register",required = false) String register,
+                                   @RequestParam(value ="verify",required = false) String verify,Model model){
         String errorMsg = null;
         String registered = null;
+        String verified = null;
         if(error!=null){
             errorMsg = "Username or Password is incorrect!";
         }
@@ -32,10 +40,14 @@ public class loginController {
             errorMsg = "You have been successfully logged out!";
         }
         if(register!=null){
-            registered ="You have been successfully register!!!";
+            registered ="You have been registered,verify mail to complete the process!!!";
+        }
+        if(verify!=null){
+            verified = "Email verified successfully!!!";
         }
         model.addAttribute("errorMsg" , errorMsg);
         model.addAttribute("registered" , registered);
+        model.addAttribute("verified",verified);
 
         return "login.html";
     }

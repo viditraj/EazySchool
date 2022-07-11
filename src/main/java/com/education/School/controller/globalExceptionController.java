@@ -2,6 +2,7 @@ package com.education.School.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,7 +13,10 @@ across the whole application in one global handling component. It can be viewed 
 exceptions thrown by methods annotated with @RequestMapping and similar.
 */
 @Slf4j
-@ControllerAdvice
+@ControllerAdvice (annotations = Controller.class)
+/* Using this '(annotations = Controller.class)' annotation we are restricting this error handler only to controllers
+which have @Controller annotation, for our API we have @RestController annotation so this error handler will not handle its errors
+We have build RestApiErrorHandler separately. */
 public class globalExceptionController {
     /*
     @ExceptionHandler will register the given method for a given exception type, so that ControllerAdvice can invoke

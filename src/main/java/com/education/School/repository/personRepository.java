@@ -2,6 +2,7 @@ package com.education.School.repository;
 
 import com.education.School.model.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 public interface personRepository extends JpaRepository<Person, Integer > {
 
@@ -10,5 +11,8 @@ public interface personRepository extends JpaRepository<Person, Integer > {
     Person findByMobileNumber(String mobileNumber);
 
     Person readByEmail(String email);
+
+    @Query("SELECT u FROM Person u WHERE u.verificationCode = ?1")
+    public Person findByVerificationCode(String code);
 
 }

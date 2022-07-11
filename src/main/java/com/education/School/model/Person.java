@@ -65,6 +65,12 @@ public class Person extends BaseEntity{
     @Transient
     private String confirmPwd;
 
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
+    @Column(name = "enable")
+    private boolean enabled;
+
     //Linking Roles table with Person table
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST, targetEntity = Roles.class)
     @JoinColumn(name = "role_id", referencedColumnName = "roleId",nullable = false)

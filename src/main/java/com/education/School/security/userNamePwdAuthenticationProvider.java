@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -27,11 +28,11 @@ public class userNamePwdAuthenticationProvider implements AuthenticationProvider
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public Authentication authenticate(Authentication authentication){
+    public Authentication authenticate(Authentication authentication ){
         //getting current user's details from authentication object
         String email = authentication.getName();
         String pwd = authentication.getCredentials().toString();
-        Person person = personRepo.readByEmail(email); // We only search person by email and dont include password
+        Person person = personRepo.readByEmail(email); // We only search person by email and don't include password
         //during searching in DB for security purpose.
         if(null!=person && person.getPersonId()>0 &&
                 passwordEncoder.matches(pwd,person.getPwd())){ //matching the user entered hashed password with DB stored hashed password

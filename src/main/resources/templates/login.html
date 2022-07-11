@@ -47,6 +47,7 @@ Author URL: http://w3layouts.com
                 <form th:action="@{/login}" method="post" class="signin-form">
                     <div class="col-md-8 login-center input-grids">
                         <li class="alert alert-primary" role="alert" th:if="${!#strings.isEmpty(registered)}" th:text="${registered}"/>
+                        <li class="alert alert-primary" role="alert" th:if="${!#strings.isEmpty(verified)}" th:text="${verified}"/>
                         <li class="alert alert-danger" role="alert" th:if="${!#strings.isEmpty(errorMsg)}"
                             th:text="${errorMsg}" />
                         <input type="text" name="username" id="username" placeholder="Username"
