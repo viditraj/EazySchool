@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Slf4j
-@Controller
+@Controller("profileControllerBean") // giving different bean name because HAL explorer also uses profile bean therefore there was a conflict
 public class profileController {
 
     @Autowired

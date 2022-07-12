@@ -2,7 +2,7 @@ package com.education.School.model;
 
 import com.education.School.annotations.FieldsValueMatch;
 import com.education.School.annotations.PasswordValidator;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -53,22 +53,27 @@ public class Person extends BaseEntity{
     @NotBlank(message="Confirm Email must not be blank")
     @Email(message = "Please provide a valid confirm email address" )
     @Transient
+    @JsonIgnore
     private String confirmEmail;
 
     @NotBlank(message="Password must not be blank")
     @Size(min=5, message="Password must be at least 5 characters long")
     @PasswordValidator
+    @JsonIgnore
     private String pwd;
 
     @NotBlank(message="Confirm Password must not be blank")
     @Size(min=5, message="Confirm Password must be at least 5 characters long")
     @Transient
+    @JsonIgnore
     private String confirmPwd;
 
     @Column(name = "verification_code", length = 64)
+    @JsonIgnore
     private String verificationCode;
 
     @Column(name = "enable")
+    @JsonIgnore
     private boolean enabled;
 
     //Linking Roles table with Person table

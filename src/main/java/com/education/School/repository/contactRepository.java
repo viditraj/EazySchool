@@ -5,6 +5,7 @@ import com.education.School.model.Contact;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
@@ -30,7 +31,7 @@ public interface contactRepository extends CrudRepository<Contact , Integer> {
     List<Contact> findByStatus(String status); //this will tell JPA to find all the contact msgs whose status = status value passed in parameter
 
     List<Contact> findByEmail(String email);
-    Page<Contact> findByStatus(String status, Pageable pageable); //this will allow JPA to have pagination capability
+    Page<Contact> readByStatus(String status, Pageable pageable); //this will allow JPA to have pagination capability
 }
 
 

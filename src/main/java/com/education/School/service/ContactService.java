@@ -60,7 +60,7 @@ public class ContactService {
         int pageSize =5;
         Pageable pageable = PageRequest.of(pageNum-1 , pageSize,
                 sortDir.equals("asc")? Sort.by(sortField).ascending():Sort.by(sortField).descending());
-        Page<Contact> msgPage = conRepo.findByStatus("OPEN",pageable);
+        Page<Contact> msgPage = conRepo.readByStatus("OPEN",pageable);
         return msgPage;
     }
 

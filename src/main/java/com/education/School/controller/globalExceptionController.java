@@ -2,10 +2,13 @@ package com.education.School.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.mail.MessagingException;
 
 /*
 @ControllerAdvice is a specialization of the @Component annotation which allows to handle exceptions
@@ -33,7 +36,7 @@ public class globalExceptionController {
         ModelAndView errorPage = new ModelAndView();
         errorPage.setViewName("error"); //error.html
         errorPage.addObject("errormsg", exception.getMessage());
-
+        log.error("Error Occurred : "+exception.getMessage());
         return errorPage;
     }
     @ExceptionHandler(BadSqlGrammarException.class)
@@ -41,7 +44,12 @@ public class globalExceptionController {
         ModelAndView errorPage = new ModelAndView();
         errorPage.setViewName("error"); //error.html
         errorPage.addObject("errormsg", "Its simply a Syntax Error, Chill and Check the syntax of your DB Query");
-
+        log.error("Error Occurred : Syntax Error in SQL Query");
         return errorPage;
+    }
+
+    @ExceptionHandler({MailSendException.class, MessagingException.class})
+    public void mailSendError(){
+        log.error("Failed to send the mail to the user");
     }
 }
