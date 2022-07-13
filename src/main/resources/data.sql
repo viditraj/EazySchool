@@ -27,3 +27,6 @@ INSERT INTO `roles` (`role_name`,`created_at`, `created_by`)
 
 INSERT INTO `roles` (`role_name`,`created_at`, `created_by`)
   VALUES ('STUDENT',CURDATE(),'DBA');
+
+insert into notifications(notification_id,description,link,created_at,created_by)
+ values("1","demo notification","http://download.com",CURDATE(),"DBA");

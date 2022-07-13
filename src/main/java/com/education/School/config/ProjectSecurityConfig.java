@@ -44,17 +44,22 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
    @Override
     protected void configure(HttpSecurity http) throws Exception {
         //mvcMatchers is used to match the endpoint with the given expression and then trigger corresponding next action
-        http.csrf().ignoringAntMatchers("/saveMsg").ignoringAntMatchers("/public/**").
+        http.csrf().ignoringAntMatchers("/saveMsg").
+                ignoringAntMatchers("/public/**").
+                ignoringAntMatchers("/healthDashboard/**").
+                ignoringAntMatchers("/notifications").
                 ignoringAntMatchers("/data-api/**").
                 ignoringAntMatchers("/api/**").and().
                 authorizeRequests().
                 mvcMatchers("/sendSMS").permitAll().
                 mvcMatchers("/home").permitAll().
                 mvcMatchers("/dashboard").authenticated().
+                mvcMatchers("/notifications").permitAll().
                 mvcMatchers("/displayProfile").authenticated().
                 mvcMatchers("/updateProfile").authenticated().
                 mvcMatchers("/api/**").authenticated().
                 mvcMatchers("/data-api/**").hasRole("ADMIN").
+                mvcMatchers("/healthDashboard/actuator/**").hasRole("ADMIN").
                 mvcMatchers("/student/**").hasRole("STUDENT").
                 mvcMatchers("/admin/**").hasRole("ADMIN").
                 mvcMatchers("/holidays/**").permitAll().

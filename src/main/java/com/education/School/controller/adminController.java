@@ -1,12 +1,10 @@
 package com.education.School.controller;
 
 
-import com.education.School.model.ClassRoom;
-import com.education.School.model.Contact;
-import com.education.School.model.Courses;
-import com.education.School.model.Person;
+import com.education.School.model.*;
 import com.education.School.repository.classRoomRepository;
 import com.education.School.repository.coursesRepository;
+import com.education.School.repository.notificationRepository;
 import com.education.School.repository.personRepository;
 import com.education.School.service.ContactService;
 import lombok.Data;
@@ -33,6 +31,9 @@ public class adminController {
 
     @Autowired
     private classRoomRepository classRepo;
+
+    @Autowired
+    private notificationRepository notificationRepo;
 
     @Autowired
     private personRepository personRepo;
@@ -236,5 +237,31 @@ public class adminController {
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/viewStudents?id="+courses.getCourseId());
         return modelAndView;
     }
+
+    @RequestMapping("displayNotifications")
+    public ModelAndView displayNotifications(Model model){
+        List<Notification> notifications = notificationRepo.findAll();
+        ModelAndView modelAndView = new ModelAndView("notifications_secured.html");
+        modelAndView.addObject("notifications" , notifications);
+        modelAndView.addObject("notification" , new Notification());
+        return modelAndView;
+    }
+
+    @PostMapping("addNewNotification")
+    public ModelAndView addNewNotification(Model model, @ModelAttribute("notification") Notification noti){
+        notificationRepo.save(noti);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/admin/displayNotifications");
+        return modelAndView;
+    }
+
+    @GetMapping("/removeNotification")
+    public String closeMsg(@RequestParam int id){
+        //Getting the Authentication details of the users who is closing the msg to update the updated by details
+        notificationRepo.deleteById(id);
+        return"redirect:/admin/displayNotifications";
+    }
+
 }
+
 

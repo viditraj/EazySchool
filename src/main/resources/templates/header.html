@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th ="https://www.thymeleaf.org"
                 xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-
 </head>
 <body>
 <!-- header -->
@@ -30,6 +29,10 @@
                     <li class="nav-item">
                         <a th:classappend="${#httpServletRequest.getRequestURI() == '/holidays/all' ? 'active' : ''}"
                                 th:href="@{/holidays/all}" class="nav-link">Holidays</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:classappend="${#httpServletRequest.getRequestURI() == '/notifications' ? 'active' : ''}"
+                           th:href="@{/notifications}" class="nav-link">Notifications</a>
                     </li>
                     <li class="nav-item">
                         <a th:classappend="${#httpServletRequest.getRequestURI() == '/contact' ? 'active' : ''}"
