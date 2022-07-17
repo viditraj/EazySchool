@@ -3,6 +3,7 @@
 Eazy School is a Web Application based on Spring Framework.
 This project demonstrates the backend API implemented using Spring Data,
 Spring Boot and Amazon RDS.
+
 This Application also shares its insights using actuator 
 with an Admin Dashboard implemented using Spring Admin.
 
